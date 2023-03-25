@@ -31,7 +31,7 @@ class SegGen:
 
         fig.write_image(output_filename)
 
-    def generate_segmented_images(self, segment_sizes, step=1):
+    def generate_segmented_images(self, segment_sizes, date, step=1):
         """
         Generate and save candlestick chart images for multiple segment sizes and start indices.
 
@@ -48,5 +48,5 @@ class SegGen:
             os.makedirs(size_dir, exist_ok=True)
 
             for start in range(0, len(self.data) - segment_size, step):
-                output_filename = os.path.join(size_dir, f"segment_{start}.png")
+                output_filename = os.path.join(size_dir, f"segment_{date}_{start}.png")
                 self._generate_candlestick_image(start, segment_size, output_filename)
