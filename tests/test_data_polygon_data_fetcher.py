@@ -1,6 +1,6 @@
 import unittest
 from datetime import datetime, timezone
-from aresdataprocessing.fetcher.polygon_data_fetcher import PolygonDataFetcher
+from data.fetcher.polygon_data_fetcher import PolygonDataFetcher
 
 class TestPolygonDataFetcher(unittest.TestCase):
     def setUp(self):

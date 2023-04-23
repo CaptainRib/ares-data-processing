@@ -1,4 +1,4 @@
-from ..fetcher.polygon_data_model import Trade
+from data.fetcher.polygon_data_model import Trade
 from typing import Iterator
 from polygon.rest.models import Trade as PTrade
 import pandas as pd

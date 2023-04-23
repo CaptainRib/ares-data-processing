@@ -1,0 +1,2 @@
+class AresException(Exception):
+    pass
