@@ -1,4 +1,5 @@
 import datetime
+from dateutil import tz
 from dateutil import parser
 
 class Utility:
@@ -19,6 +20,13 @@ class Utility:
             int: Date and time in nanoseconds since the epoch.
         """
         try:
+            new_york = tz.gettz('America/New_York')
+            dt = parser.parse(date_time_str).replace(tzinfo=new_york)
+            if dt.dst() != datetime.timedelta(0):  # Check if within Daylight Saving Time
+                tz_offset = "-04:00"
+            else:
+                tz_offset = "-05:00"
+            date_time_str += tz_offset
             dt = parser.parse(date_time_str)
             dt_utc = dt.astimezone(datetime.timezone.utc)
             nanoseconds = int(dt_utc.timestamp() * 1e9)
