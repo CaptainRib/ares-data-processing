@@ -31,7 +31,7 @@ class SegGen:
 
         fig.write_image(output_filename)
 
-    def generate_segmented_images(self, segment_sizes, date, step=1):
+    def generate_segmented_images(self, segment_sizes, ticker, date, step=1):
         """
         Generate and save candlestick chart images for multiple segment sizes and start indices.
 
@@ -41,10 +41,10 @@ class SegGen:
         """
         # Find the correct output directory
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        output_base_directory = os.path.join(current_dir, '..', '..', 'data', 'images')
+        output_base_directory = '/home/jeffreydhy/data/projects/ares-finance/generated/images'
 
         for segment_size in segment_sizes:
-            size_dir = os.path.join(output_base_directory, f"{segment_size}min_segments")
+            size_dir = os.path.join(output_base_directory, f"{ticker}_{segment_size}min_segments")
             os.makedirs(size_dir, exist_ok=True)
 
             for start in range(0, len(self.data) - segment_size, step):

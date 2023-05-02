@@ -1,12 +1,14 @@
+import sys
+sys.path.append('/home/jeffreydhy/workspace/project-ares/ares-finance')
+
 import pandas as pd
 from utils.time_utils import Utility
 from utils.data_utils import DataUtils
 
-from .segementation_generation import SegGen
-from ..fetcher.polygon_data_fetcher import PolygonDataFetcher
+from data.fetcher.polygon_data_fetcher import PolygonDataFetcher
+from segementation_generation import SegGen
 
-import sys
-sys.path.append('/Users/captainrib/workspace/project-ares/ares-data-processing/aresdataprocessing')
+
 
 def read_data(start_time, end_time):
     fetcher = PolygonDataFetcher()
@@ -16,8 +18,7 @@ def read_data(start_time, end_time):
     end_time_nano = Utility.datetime_str_to_nanoseconds(end_time)
     trade_data = fetcher.fetch_trades(symbol, start_time_nano, end_time_nano)
     df = DataUtils.import_data_from_iter(trade_data, symbol)
-    df1 = DataUtils.resample_xmin_bars(df, 1)
-    return df1
+    return df
 
 dates = [
         # '2023-01-03',
@@ -74,7 +75,7 @@ dates = [
         # '2023-03-17',
         # '2023-03-20',
         # '2023-03-21',
-        # '2023-03-22'
+        # '2023-03-22',
         '2023-03-23'
         ]
 
@@ -84,17 +85,19 @@ def load_data():
         start_time = '{}T09:30:00-04:00'.format(date)
         end_time = '{}T16:00:00-04:00'.format(date)
         data = read_data(start_time=start_time, end_time=end_time)
-        data.to_csv('data/raw/amd_{}.csv'.format(date))
+        data.to_csv('~/data/projects/ares-finance/raw/amd_{}.csv'.format(date), index=False)
+        df1 = DataUtils.resample_xmin_bars(data, 1)
+        df1.to_csv('~/data/projects/ares-finance/raw/amd_{}_1_min.csv'.format(date), index=False)
         
-# load_data()
+#load_data()
 def generate_img():
     for date in dates:
-        data = pd.read_csv('data/raw/amd_{}.csv'.format(date), parse_dates=['timestamp'])
+        data = pd.read_csv('~/data/projects/ares-finance/raw/amd_{}_1_min.csv'.format(date), parse_dates=['timestamp'])
         segment_sizes = [30]
         seggen = SegGen(data)
-        seggen.generate_segmented_images(segment_sizes, date)
+        seggen.generate_segmented_images(segment_sizes, 'AMD', date)
     
-#load_data()
+
 generate_img()
 
 # import os
