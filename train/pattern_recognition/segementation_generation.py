@@ -3,7 +3,7 @@ import plotly.graph_objects as go
 import os
 
 
-class SegGen:
+class SegmentImageGenerator:
     def __init__(self, data):
         self.data = data
 
