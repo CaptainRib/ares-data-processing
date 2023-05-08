@@ -40,8 +40,7 @@ class SegGen:
         :param step: int, the step size for iterating through the data (default: 1)
         """
         # Find the correct output directory
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        output_base_directory = '/home/jeffreydhy/data/projects/ares-finance/generated/images'
+        output_base_directory = '/home/jeffreydhy/data/projects/ares-finance/generated/images/unlabeled'
 
         for segment_size in segment_sizes:
             size_dir = os.path.join(output_base_directory, f"{ticker}_{segment_size}min_segments")
